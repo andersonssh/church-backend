@@ -6,9 +6,8 @@ from pymongo import MongoClient
 from src.utils import isodatetime
 from bson.objectid import ObjectId
 
-
 MONGO_HOST = os.getenv('MONGO_HOST', 'localhost')
-MONGO_DATABASE = os.getenv('MONGO_DATABASE', 'development')
+MONGO_DATABASE = os.getenv('MONGO_DATABASE', 'igreja')
 
 if MONGO_HOST.startswith('localhost'):
     client = MongoClient()
@@ -40,7 +39,7 @@ def fetch(collection: str, query: dict = None) -> list:
     return list(db.get_collection(collection).find(query))
 
 
-def insert_document(collection: str, document: dict) -> dict:
+def insert_document(collection: str, document: dict) -> tuple:
     """
     Insere um novo documento em uma collection
 
@@ -49,7 +48,7 @@ def insert_document(collection: str, document: dict) -> dict:
 
     Args:
          collection (str): a collection onde os documentos serao buscados
-         query (dict): query usada para filtrar os documentos
+         document (dict): query usada para filtrar os documentos
 
     Returns:
         tuple: (id_do_documento_inserido, data_documento_criado)
@@ -60,8 +59,9 @@ def insert_document(collection: str, document: dict) -> dict:
 
     return inserted_id, document['created_at']
 
+
 def set_document_by_id(collection: str, document_id: str,
-                          update_fields: dict) -> dict:
+                       update_fields: dict) -> str:
     """
     Atualiza documentos baseado no id. Em caso de sucesso, retorna a data
     da atualizacao. Em caso de falha, retorna None
@@ -75,10 +75,10 @@ def set_document_by_id(collection: str, document_id: str,
         str: data da alteração
     """
     update_fields['updated_at'] = isodatetime()
-    result = db.get_collection(collection).update_one({
+    db.get_collection(collection).update_one({
         '_id': ObjectId(document_id)
     }, {
-       '$set': update_fields
+        '$set': update_fields
     })
-    return update_fields['updated_at'] if result.modified_count > 0\
-        else None
+
+    return update_fields['updated_at']
