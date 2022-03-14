@@ -75,10 +75,11 @@ def set_document_by_id(collection: str, document_id: str,
         str: data da alteração
     """
     update_fields['updated_at'] = isodatetime()
-    db.get_collection(collection).update_one({
+    result = db.get_collection(collection).update_one({
         '_id': ObjectId(document_id)
     }, {
         '$set': update_fields
     })
 
-    return update_fields['updated_at']
+    return update_fields['updated_at'] if result.modified_count == 1\
+        else None
