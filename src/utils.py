@@ -1,6 +1,8 @@
 """
 Arquivo com funcoes variadas
 """
+from datetime import datetime
+
 
 def sort_by_index(array: list, index: int = 0, reverse: bool = False) -> list:
     """Ordena lista de listas baseado no indice
@@ -31,3 +33,9 @@ def sort_by_index(array: list, index: int = 0, reverse: bool = False) -> list:
     return array[::-1] if reverse else array
 
 
+def isodatetime():
+    """
+    Retorna a data atual formatada de acordo com o padrao
+    internacional ISO 8601 sem microsegundos
+    """
+    return datetime.today().isoformat(' ', 'seconds')
