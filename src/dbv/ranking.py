@@ -1,8 +1,8 @@
 """
 Ranking dos desbravadores
 """
-from flask import Blueprint
-from src.utils import sort_by_index
+from flask import Blueprint, jsonify
+from src.utils import sort_lists_by_index
 from src.database import fetch
 from src.http import HTTP_OK
 
@@ -15,10 +15,8 @@ def get_ranking():
     """
     members = fetch('members')
 
-    data = [
-        [member['name'], member['points']] for member in members
-    ]
+    data = [(member['name'], member['score']) for member in members]
 
-    ranked_by_points = sort_by_index(data, index=1, reverse=True)
+    ranked_by_points = sort_lists_by_index(data, index=1, reverse=True)
 
-    return {'data': ranked_by_points}, HTTP_OK
+    return jsonify(ranked_by_points), HTTP_OK

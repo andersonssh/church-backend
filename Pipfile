@@ -20,6 +20,7 @@ Werkzeug = "==2.0.3"
 python-dotenv = "*"
 pymongo = {extras = ["srv"], version = "*"}
 faker = "*"
+requests = "*"
 
 [dev-packages]
 

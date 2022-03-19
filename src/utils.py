@@ -4,21 +4,23 @@ Arquivo com funcoes variadas
 from datetime import datetime
 
 
-def sort_by_index(array: list, index: int = 0, reverse: bool = False) -> list:
-    """Ordena lista de listas baseado no indice
+def sort_lists_by_index(array: list, index: int = 0, reverse: bool = False) -> list:
+    """Ordena listas dentro de uma lista. A ordem será dada pelo
+    valor que o indice aponta dentro de cada lista. Por exemplo: com index = 0
+    a função irá ordenar as listas de acordo com o valor que existe no indice 0 de cada lista ->
+    [[indice0, indice1], [indice0, indice1]]
 
     Args:
         array: lista com listas
         index: inteiro com o número do indice
-        reverse: True faz a ordem inversa
+        reverse: True organiza em ordem decrescente
 
     Raises:
         TypeError: Caso os elementos no indice
-        selecionados não sejam do mesmo tipo
+        selecionado não sejam do mesmo tipo
         IndexError: Caso algum elemento da lista não possua o indice informado
 
     Returns:
-         None: Caso o indice não exista
          list: Lista organizada
     """
     for _ in range(len(array)):
