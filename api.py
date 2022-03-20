@@ -1,3 +1,6 @@
+"""
+Arquivo principal da api
+"""
 from flask import Flask
 from src.dbv.ranking import ranking_bp
 from src.dbv.members import members_bp

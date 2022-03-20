@@ -3,8 +3,8 @@ Database interface
 """
 import os
 from pymongo import MongoClient
-from src.utils import isodatetime
 from bson.objectid import ObjectId
+from src.utils import isodatetime
 
 MONGO_HOST = os.getenv('MONGO_HOST', 'localhost')
 MONGO_DATABASE = os.getenv('MONGO_DATABASE', 'igreja')
