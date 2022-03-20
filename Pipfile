@@ -24,6 +24,8 @@ requests = "*"
 
 [dev-packages]
 pylint = "*"
+pytest = "*"
+mongomock = "*"
 
 [requires]
 python_version = "3.8"
