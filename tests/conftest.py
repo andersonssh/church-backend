@@ -2,6 +2,7 @@
 Arquivo de configuracao dos testes
 """
 from unittest import mock
+import json
 import pytest
 from mongomock import Database, MongoClient
 from api import app
@@ -25,3 +26,12 @@ def path_mongo_client():
     mock_db = Database(MongoClient(), '', _store=None)
     with mock.patch.object(database, 'db', mock_db):
         yield
+
+
+@pytest.fixture
+def mock_member():
+    """
+    mock member
+    """
+    with open('tests/mock/member.json', 'r', encoding='UTF-8') as member:
+        yield json.load(member)
