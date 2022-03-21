@@ -17,12 +17,28 @@ def get_members():
     members = fetch('members')
 
     data = []
-    print(members)
+
     for member in members:
         member['_id'] = str(member['_id'])
         data.append(member)
 
     return jsonify(data), HTTP_OK
+
+
+@members_bp.route('/<string:member_id>')
+def get_member(member_id):
+    """
+    Retorna membro baseado no _id
+    """
+    members = fetch('members', {'_id': ObjectId(member_id)})
+
+    if not members:
+        return {'error': 'member not found'}, HTTP_NOT_FOUND
+
+    member = members[0]
+    member['_id'] = str(member['_id'])
+
+    return member, HTTP_OK
 
 
 @members_bp.route('/', methods=['POST'])
@@ -36,7 +52,9 @@ def post_member():
     role = payload['role']
 
     response = insert_document('members', {'name': name,
-                                           'role': role,})
+                                           'role': role,
+                                           'score': 0,
+                                           'score_details': []})
 
     return {'document_id': response[0],
             'created_at': response[1]}, HTTP_CREATED
@@ -51,6 +69,8 @@ def update_member(member_id):
     Args:
         member_id (str): id do membro a ser editado
     """
+    # exemplo de detalhes da pontuacao [{'points': 10, 'description': 'exemplo'}]
+
     members = fetch('members', {'_id': ObjectId(member_id)})
 
     if not members:
@@ -61,11 +81,11 @@ def update_member(member_id):
     if 'score_details' in payload.keys():
         member = members[0]
 
-        recorded_score = member['score']
         recorded_score_details = member['score_details']
+        new_score_details = payload['score_details'] + recorded_score_details
 
-        payload['score'] = sum([item[0] for item in recorded_score_details]) + recorded_score
-        payload['score_details'] = payload['score_details'] + recorded_score_details
+        payload['score'] = sum([item['points'] for item in new_score_details])
+        payload['score_details'] = new_score_details
 
     updated_at = set_document_by_id('members', member_id, payload)
 
