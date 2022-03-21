@@ -3,10 +3,13 @@ Arquivo de configuracao dos testes
 """
 from unittest import mock
 import json
+from bson.objectid import ObjectId
 import pytest
 from mongomock import Database, MongoClient
 from api import app
 from src import database
+
+MOCK_MEMBER_ID = str(ObjectId())
 
 
 @pytest.fixture
