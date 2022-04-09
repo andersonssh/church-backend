@@ -1,0 +1,29 @@
+{
+  "title": "alterar dados dos membros e incluir pontuacao",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "score_details": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["points", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "points": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
