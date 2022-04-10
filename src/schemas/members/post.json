@@ -1,0 +1,14 @@
+{
+  "title": "schema post para inserir novos membros",
+  "required": ["name", "role"],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    }
+  }
+}

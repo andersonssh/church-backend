@@ -21,6 +21,7 @@ python-dotenv = "*"
 pymongo = {extras = ["srv"], version = "*"}
 faker = "*"
 requests = "*"
+jsonschema = "*"
 
 [dev-packages]
 pylint = "*"
