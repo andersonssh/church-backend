@@ -9,7 +9,11 @@ from mongomock import Database, MongoClient
 from api import app
 from src import database
 
-MOCK_MEMBER_ID = str(ObjectId())
+MOCK_MEMBER_ID_OBJECT_ID = ObjectId()
+MOCK_MEMBER_ID_STR = str(MOCK_MEMBER_ID_OBJECT_ID)
+MOCK_SCORE_DETAILS = [{'points': 100, 'description': 'description test'},
+                      {'points': 200, 'description': 'description test'},
+                      {'points': 300, 'description': 'description test'}]
 
 
 @pytest.fixture
@@ -37,4 +41,6 @@ def mock_member():
     mock member
     """
     with open('tests/mock/member.json', 'r', encoding='UTF-8') as member:
-        yield json.load(member)
+        member = json.load(member)
+        member['_id'] = MOCK_MEMBER_ID_OBJECT_ID
+        yield member
