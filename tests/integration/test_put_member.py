@@ -8,15 +8,16 @@ from src.http import HTTP_OK, HTTP_BAD_REQUEST
 PUT_MEMBER_ROUTE = '/members/' + MOCK_MEMBER_ID_STR
 
 
-def test_update_member_success(client, mock_member):
+def test_update_member_success(client, mock_member, jwt_headers):
     """
     Testa atualizacao de dados dos membros e insercao de pontos
     """
     database.insert_document('members', mock_member)
 
     response_test1 = client.put(PUT_MEMBER_ROUTE,
-                          json={'score_details': MOCK_SCORE_DETAILS,
-                                'role': 'lider', 'name': 'joao'})
+                                json={'score_details': MOCK_SCORE_DETAILS,
+                                'role': 'lider', 'name': 'joao'},
+                                headers=jwt_headers)
 
     member_test1 = database.fetch('members', {'_id': MOCK_MEMBER_ID_OBJECT_ID})[0]
 
@@ -24,7 +25,8 @@ def test_update_member_success(client, mock_member):
     assert response_test1.status_code == HTTP_OK
 
     response_test2 = client.put(PUT_MEMBER_ROUTE,
-                          json={'score_details': MOCK_SCORE_DETAILS})
+                                json={'score_details': MOCK_SCORE_DETAILS},
+                                headers=jwt_headers)
 
     member_test2 = database.fetch('members', {'_id': MOCK_MEMBER_ID_OBJECT_ID})[0]
 
@@ -35,7 +37,7 @@ def test_update_member_success(client, mock_member):
     assert response_test2.status_code == HTTP_OK
 
 
-def test_update_member_fail_schema(client, mock_member):
+def test_update_member_fail_schema(client, mock_member, jwt_headers):
     """
     testa falha por schema ao atualizar membro
     """
@@ -43,12 +45,12 @@ def test_update_member_fail_schema(client, mock_member):
 
     assert client.put(PUT_MEMBER_ROUTE, json={
         'score_details': [100, 'test']
-    }).status_code == HTTP_BAD_REQUEST
+    }, headers=jwt_headers).status_code == HTTP_BAD_REQUEST
 
     assert client.put(PUT_MEMBER_ROUTE, json={
         'score_details': [{'points': '100', 'description': 'test'}]
-    }).status_code == HTTP_BAD_REQUEST
+    }, headers=jwt_headers).status_code == HTTP_BAD_REQUEST
 
     assert client.put(PUT_MEMBER_ROUTE, json={
         'score': 1200
-    }).status_code == HTTP_BAD_REQUEST
+    }, headers=jwt_headers).status_code == HTTP_BAD_REQUEST

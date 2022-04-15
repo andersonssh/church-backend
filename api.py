@@ -4,8 +4,10 @@ Arquivo principal da api
 from flask import Flask
 from src.blueprints.dbv.ranking import ranking_bp
 from src.blueprints.dbv.members import members_bp
+from src.blueprints.auth import auth_bp
 
 app = Flask(__name__)
 
 app.register_blueprint(ranking_bp)
 app.register_blueprint(members_bp)
+app.register_blueprint(auth_bp)

@@ -1,10 +1,12 @@
 """
 Arquivo de configuracao dos testes
 """
-from unittest import mock
 import json
-from bson.objectid import ObjectId
+import os
+from unittest import mock
 import pytest
+import jwt
+from bson.objectid import ObjectId
 from mongomock import Database, MongoClient
 from api import app
 from src import database
@@ -44,3 +46,12 @@ def mock_member():
         member = json.load(member)
         member['_id'] = MOCK_MEMBER_ID_OBJECT_ID
         yield member
+
+
+@pytest.fixture
+def jwt_headers():
+    """
+    token para autenticacao de rotas
+    """
+    token = jwt.encode({'test': 'test'}, key=os.environ['SECRET_KEY'], algorithm='HS256')
+    yield {'Authorization': f'Bearer {token}'}

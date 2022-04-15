@@ -22,6 +22,8 @@ pymongo = {extras = ["srv"], version = "*"}
 faker = "*"
 requests = "*"
 jsonschema = "*"
+pyjwt = "*"
+bcrypt = "*"
 
 [dev-packages]
 pylint = "*"

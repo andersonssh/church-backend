@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 from flask import Blueprint, request, jsonify
 from src.database import insert_document, fetch, set_document_by_id
 from src.http import HTTP_CREATED, HTTP_OK, HTTP_NOT_FOUND, validate_content, MimeTypes
+from src.auth import requires_auth
 import json
 
 
@@ -49,6 +50,7 @@ def get_member(member_id):
 
 
 @members_bp.route('/', methods=['POST'])
+@requires_auth
 @validate_content(POST_MEMBERS_SCHEMA, MimeTypes.JSON)
 def post_member():
     """Insere novo membro. O json da requisicao deve conter a chave
@@ -69,6 +71,7 @@ def post_member():
 
 
 @members_bp.route('/<string:member_id>', methods=['PUT'])
+@requires_auth
 @validate_content(PUT_MEMBERS_SCHEMA, MimeTypes.JSON)
 def update_member(member_id):
     """
