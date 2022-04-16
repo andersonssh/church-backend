@@ -25,6 +25,7 @@ jsonschema = "*"
 pyjwt = "*"
 bcrypt = "*"
 flask-cors = "*"
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"
