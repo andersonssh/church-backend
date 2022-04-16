@@ -15,7 +15,7 @@ def get_ranking():
     """
     members = fetch('members')
 
-    data = [(member['name'], member['score']) for member in members]
+    data = [(member['name'], member['score'], member['score_details']) for member in members]
 
     ranked_by_points = sort_lists_by_index(data, index=1, reverse=True)
 
