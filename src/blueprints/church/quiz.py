@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.http import HTTP_BAD_REQUEST
+from src.http import HTTP_BAD_REQUEST, HTTP_OK
 from src import database
 
 MAX_LIMIT_QUESTIONS = 15
@@ -41,6 +41,6 @@ def quiz():
     if limit.isnumeric() and 0 <= int(limit) <= MAX_LIMIT_QUESTIONS:
         limit = int(limit)
     else:
-        return {'message': f'Limite max: {MAX_LIMIT_QUESTIONS}'}
+        return {'message': f'Limite max: {MAX_LIMIT_QUESTIONS}'}, HTTP_BAD_REQUEST
 
-    return jsonify(list(_get_quiz_questions(level, matter, limit)))
+    return jsonify(list(_get_quiz_questions(level, matter, limit))), HTTP_OK
