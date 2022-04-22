@@ -14,12 +14,11 @@ def _get_quiz_questions(level=0, matter='all', limit=10):
     if matter != 'all':
         query['matter'] = 'matter'
 
-    match = {'$match': query}
-    return database.db.get_collection('quiz').aggregate([match,
-                                                         {'$addFields': {'n_random': {'$rand': {}}}},
-                                                         {'$sort': {'n_random': 1}},
-                                                         {'$unset': ['_id', 'n_random', 'created_at', 'updated_at']},
-                                                         {'$limit': limit}])
+    return database.db.get_collection('quiz').aggregate([{'$match': query},
+                                                        {'$addFields': {'n_random': {'$rand': {}}}},
+                                                        {'$sort': {'n_random': 1}},
+                                                        {'$unset': ['_id', 'n_random', 'created_at', 'updated_at']},
+                                                        {'$limit': limit}])
 
 
 @quiz_bp.route('/quiz')
