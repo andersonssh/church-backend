@@ -6,10 +6,10 @@ from src.utils import sort_lists_by_index
 from src.database import fetch
 from src.http import HTTP_OK
 
-ranking_bp = Blueprint('ranking_bp', __name__, url_prefix='/ranking')
+ranking_bp = Blueprint('ranking_bp', __name__)
 
 
-@ranking_bp.route('/')
+@ranking_bp.route('/ranking')
 def get_ranking():
     """GET /ranking : ranking dos dbvs baseado nos pontos
     """
