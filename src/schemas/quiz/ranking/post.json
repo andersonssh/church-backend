@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["score", "name", "session_id"],
+  "properties": {
+    "score": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "pass": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    }
+  }
+}
