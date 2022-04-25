@@ -68,7 +68,7 @@ def ranking():
     result = database.db.get_collection('quiz_ranking').aggregate([
         {'$sort': {'score': -1}},
         {'$unset': ['_id', 'n_random', 'created_at', 'updated_at']},
-        {'$limit': 15}
+        {'$limit': 10}
     ])
     return jsonify(list(result))
 
@@ -77,6 +77,8 @@ def ranking():
 @validate_content(POST_QUIZ_RANKING_SCHEMA, MimeTypes.JSON)
 def post_ranking():
     payload = request.json
+    payload['name'] = payload['name'].capitalize()
+
     if os.getenv('QUIZ_PASS', '') == payload.get('pass', None):
         quiz_users = database.fetch('quiz_ranking',
                                     {'session_id': payload['session_id'],
