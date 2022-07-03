@@ -1,7 +1,6 @@
 # site-igreja-backend
-Backend do site adventistaslagoadocarneiro.com.br
+Backend do site https://adventistaslagoadocarneiro.com.br feito com FLASK.
 
-## Resumo do projeto
-Esta API é pelo QUIZ da igreja e pelos dados de cada membro do clube de desbravadores.
-Cada membro inscrito no clube automáticamente já participa do ranking de pontos, também gerenciado
-por essa API.
+## Visão Geral
+API responsável por fornecer dados para o ranqueamento de pontos de uma competição e um QUIZ. Veja mais detalhes no
+[README](https://github.com/andersonssh/church-frontend) do frontend. 
